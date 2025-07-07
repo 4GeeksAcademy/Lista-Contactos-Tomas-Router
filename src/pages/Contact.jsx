@@ -1,20 +1,25 @@
 import React from 'react';
 import ContactCard from '../components/ContactCard';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 function Contact() {
   const navigate = useNavigate();
+   const [contacts, setContacts] = useState([]);
 
-  const getRandomImage = () => {
-    const randomId = Math.floor(Math.random() * 1000);
-    return `https://picsum.photos/seed/${randomId}/200`;
-  };
+   useEffect(() => {
+    fetch("https://playground.4geeks.com/contact/agendas/agenda_prueba")
+      .then(response => response.json())
+       .then(data => {
+        console.log("Datos recibidos del backend:", data); // ✅ dentro del .then
+        setContacts(data.contacts); // asegúrate de que 'data' es un array aquí
+      })
+      .catch(error => console.error("Error al cargar contactos:", error));
+       
+  }, []);
 
-  const contacts = [
-    { id: 1, img: getRandomImage(), ubicacion: 'Jerez', tlf: '666889877', name: 'Juan Pérez', email: 'juan@example.com' },
-    { id: 2, img: getRandomImage(), ubicacion: 'Sanxenxo', tlf: '657849385', name: 'Ana López', email: 'ana@example.com' },
-    { id: 3, img: getRandomImage(), ubicacion: 'Oporto', tlf: '768594875', name: 'Carlos Ruiz', email: 'carlos@example.com' }
-  ];
+ 
 
   return (
     <div className="container mt-5">
@@ -25,13 +30,13 @@ function Contact() {
       </div>
 
       <div className="contact-list">
-        {contacts.map((contact) => (
+       {contacts.map((contact) => (
           <ContactCard
             key={contact.id}
-            img={contact.img}
+            img={`https://picsum.photos/seed/${contact.id}/200`}
             name={contact.name}
-            ubicacion={contact.ubicacion}
-            tlf={contact.tlf}
+            ubicacion={contact.address}
+            tlf={contact.phone}
             email={contact.email}
           />
         ))}
