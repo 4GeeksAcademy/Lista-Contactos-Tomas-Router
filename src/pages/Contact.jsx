@@ -1,7 +1,9 @@
 import React from 'react';
 import ContactCard from '../components/ContactCard';
+import { useNavigate } from 'react-router-dom';
 
 function Contact() {
+  const navigate = useNavigate();
 
   const getRandomImage = () => {
     const randomId = Math.floor(Math.random() * 1000);
@@ -17,7 +19,7 @@ function Contact() {
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-end mb-4">
-        <button className="btn btn-success">
+         <button className="btn btn-success" onClick={() => navigate("/AddContact")}>
           Add new Contact
         </button>
       </div>

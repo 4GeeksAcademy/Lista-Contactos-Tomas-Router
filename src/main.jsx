@@ -1,18 +1,16 @@
+// main.jsx
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'  // Global styles for your application
-import { RouterProvider } from "react-router-dom";  // Import RouterProvider to use the router
-import { router } from "./routes";  // Import the router configuration
-import { StoreProvider } from './hooks/useGlobalReducer';  // Import the StoreProvider for global state management
-import Contact from './pages/Contact';
+import './index.css'
+import { RouterProvider } from "react-router-dom"
+import { router } from "./routes"
+import { StoreProvider } from './hooks/useGlobalReducer'
 
-const Main = () => {
-    return (
-        <div>
-            <Contact/>
-        </div>
-    );
-}
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <StoreProvider>
+      <RouterProvider router={router} />
+    </StoreProvider>
+  </React.StrictMode>
+)
 
-// Render the Main component into the root DOM element.
-ReactDOM.createRoot(document.getElementById('root')).render(<Main />)
