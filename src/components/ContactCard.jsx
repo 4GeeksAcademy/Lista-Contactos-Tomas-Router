@@ -1,5 +1,6 @@
 // ContactCard.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function ContactCard({ id, img, name, ubicacion, tlf, email }) {
 
@@ -45,7 +46,9 @@ function ContactCard({ id, img, name, ubicacion, tlf, email }) {
 
         {/* Botones alineados a la derecha */}
         <div className="ms-auto d-flex gap-2">
-          <button className="btn btn-sm">✏️</button>
+          <Link to="/EditContact" state={{ id, img, name, ubicacion, tlf, email }}>
+            <button className="btn btn-sm">✏️</button>
+          </Link>
           <button className="btn btn-sm" onClick={borrarContacto}>🗑️</button>
         </div>
       </div>
