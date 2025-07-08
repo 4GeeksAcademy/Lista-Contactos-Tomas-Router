@@ -9,7 +9,7 @@ function Contact() {
    const [contacts, setContacts] = useState([]);
 
    useEffect(() => {
-    fetch("https://playground.4geeks.com/contact/agendas/agenda_prueba")
+    fetch("https://playground.4geeks.com/contact/agendas/rabel")
       .then(response => response.json())
        .then(data => {
         console.log("Datos recibidos del backend:", data); // ✅ dentro del .then
@@ -19,6 +19,9 @@ function Contact() {
        
   }, []);
 
+  const handleDelete = (id) => {
+    setContacts(prev => prev.filter(contact => contact.id !== id));
+  };
  
 
   return (
@@ -29,15 +32,17 @@ function Contact() {
         </button>
       </div>
 
-      <div className="contact-list">
+      <div className="contact-list mb-5">
        {contacts.map((contact) => (
           <ContactCard
             key={contact.id}
+            id={contact.id}
             img={`https://picsum.photos/seed/${contact.id}/200`}
             name={contact.name}
             ubicacion={contact.address}
             tlf={contact.phone}
             email={contact.email}
+            handleDelete={handleDelete}
           />
         ))}
       </div>
