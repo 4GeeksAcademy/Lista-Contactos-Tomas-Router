@@ -20,7 +20,7 @@ function AddContact() {
     };
 
     try {
-      const response = await fetch('https://playground.4geeks.com/contact/agendas/rabel/contacts', {
+      const response = await fetch('https://playground.4geeks.com/contact/agendas/agenda_tomas/contacts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

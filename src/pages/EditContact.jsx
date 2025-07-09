@@ -24,7 +24,7 @@ function EditContact() {
 
   const guardarContacto = async () => {
     try {
-      const response = await fetch(`https://playground.4geeks.com/contact/agendas/rabel/contacts/${id}`, {
+      const response = await fetch(`https://playground.4geeks.com/contact/agendas/agenda_tomas/contacts/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
