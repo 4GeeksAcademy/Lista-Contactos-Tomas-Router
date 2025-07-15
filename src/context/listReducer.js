@@ -1,18 +1,22 @@
 import { ObtenerContactos, CrearContacto, EditarContacto, BorrarContacto } from './actionTypes';
-import { fetchContacts, editarContacto, guardarContacto, borrarContacto } from '../operacionesCRUD/CRUD';
+import { fetchContactos, actualizarContacto, guardarNuevoContacto, eliminarContacto } from '../operacionesCRUD/CRUD';
 
-export const initialState = { contactos: []};
+export const initialState = { contactos: [] };
 
 export function listReducer(state, action) {
     switch (action.type) {
         case ObtenerContactos:
-            return fetchContacts;
+            return fetchContactos;
+
         case CrearContacto:
-            return editarContacto;
+            return guardarNuevoContacto;
+
         case EditarContacto:
-            return guardarContacto;
+            return actualizarContacto;
+            
         case BorrarContacto:
-            return borrarContacto;
+            return eliminarContacto;
+
         default:
             return state;
     }

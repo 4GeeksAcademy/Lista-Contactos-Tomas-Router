@@ -1,99 +1,70 @@
-// Obtener Contactos
-export const fetchContacts = () => {
-    fetch("https://playground.4geeks.com/contact/agendas/agenda_tomas")
-        .then(response => response.json())
-        .then(data => {
-            console.log("Datos recibidos del backend:", data);
-            setContacts(data.contacts);
-        })
-        .catch(error => console.error("Error al cargar contactos:", error));
-}
+import {
+  ObtenerContactos,
+  CrearContacto,
+  EditarContacto,
+  BorrarContacto
+} from '../context/actionTypes';
 
+const API_URL = "https://playground.4geeks.com/contact/agendas/agenda_tomas";
 
-// Editar Contacto
-export const editarContacto = async () => {
-    try {
-        const response = await fetch(`https://playground.4geeks.com/contact/agendas/agenda_tomas/contacts/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(contacto)
-        });
-
-        if (response.ok) {
-            alert('Contacto actualizado');
-            navigate('/');
-        } else {
-            const data = await response.json();
-            alert(`Error: ${data.msg || 'No se pudo actualizar'}`);
-        }
-    } catch (error) {
-        console.error(error);
-        alert('Error de red');
-    }
+export const fetchContactos = async () => {
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    dispatch({ type: ObtenerContactos, payload: data.contacts || [] });
+  } catch (err) {
+    console.error("Error al cargar contactos:", err);
+    dispatch({ type: ObtenerContactos, payload: [] });
+  }
 };
 
-// Guardar Nuevo contacto
-export const guardarContacto = async (e) => {
-    e.preventDefault();
-
-    const nuevoContacto = {
-        "name": name,
-        "phone": tlf,
-        "email": email,
-        "address": address
-    };
-
-    try {
-        const response = await fetch('https://playground.4geeks.com/contact/agendas/agenda_tomas/contacts', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(nuevoContacto)
-        });
-
-        if (response.ok) {
-            alert('Contacto guardado con éxito');
-            setName('');
-            setEmail('');
-            setTlf('');
-            setAddress('');
-        } else {
-            const data = await response.json();
-            console.error('Error del servidor:', data);
-            alert(`Error al guardar: ${data.msg || 'Datos incorrectos'}`);
-        }
-    } catch (error) {
-        console.error('Error de red:', error);
-        alert('Error en la solicitud');
+export const guardarNuevoContacto = async (contacto) => {
+  try {
+    const res = await fetch(`${API_URL}/contacts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(contacto)
+    });
+    const data = await res.json();
+    if (res.ok) {
+      dispatch({ type: CrearContacto, payload: data });
+    } else {
+      alert("Error al crear contacto");
     }
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-// Borrar contacto
-export const borrarContacto = async (e) => {
-    e.preventDefault();
-    // COnfirmacion
-    const confirmed = window.confirm(`¿Estás seguro de eliminar a ${name}?`);
-    if (!confirmed) return;
-
-    try {
-        const response = await fetch(`https://playground.4geeks.com/contact/agendas/rabel/contacts/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            alert('Contacto eliminado');
-        } else {
-            const data = await response.json();
-            alert(`Error al eliminar: ${data.msg || 'Error desconocido'}`);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error en la red al intentar borrar');
+export const actualizarContacto = async (id, contacto) => {
+  try {
+    const res = await fetch(`${API_URL}/contacts/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(contacto)
+    });
+    const data = await res.json();
+    if (res.ok) {
+      dispatch({ type: EditarContacto, payload: data });
+    } else {
+      alert("Error al actualizar contacto");
     }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const eliminarContacto = async (id) => {
+  try {
+    const res = await fetch(`${API_URL}/contacts/${id}`, {
+      method: "DELETE"
+    });
+    if (res.ok) {
+      dispatch({ type: BorrarContacto, payload: id });
+    } else {
+      alert("Error al borrar contacto");
+    }
+  } catch (err) {
+    console.error(err);
+  }
 };

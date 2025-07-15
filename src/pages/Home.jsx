@@ -6,6 +6,7 @@ export const Home = () => {
   const {store, dispatch} =useGlobalReducer()
 
 	return (
-		<></>
+		<>
+		</>
 	);
 }; 

@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useList } from '../context/ListContext';
+import Contact from './Contact';
+import { guardarNuevoContacto } from '../operacionesCRUD/CRUD';
 
 function AddContact() {
 
@@ -9,47 +12,61 @@ function AddContact() {
   const [tlf, setTlf] = useState('');
   const [address, setAddress] = useState('');
 
-  const guardarContacto = async (e) => {
-    e.preventDefault();
+ 
 
-    const nuevoContacto = {
+  useEffect(() => {
+     const nuevoContacto = {
       "name": name,
       "phone": tlf,
       "email": email,
       "address": address
     };
+  })
 
-    try {
-      const response = await fetch('https://playground.4geeks.com/contact/agendas/agenda_tomas/contacts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(nuevoContacto)
-      });
+  const {dispatch} = useList();
 
-      if (response.ok) {
-        alert('Contacto guardado con éxito');
-        setName('');
-        setEmail('');
-        setTlf('');
-        setAddress('');
-      } else {
-        const data = await response.json();
-        console.error('Error del servidor:', data);
-        alert(`Error al guardar: ${data.msg || 'Datos incorrectos'}`);
-      }
-    } catch (error) {
-      console.error('Error de red:', error);
-      alert('Error en la solicitud');
-    }
-  };
+  // const guardarContacto = async (e) => {
+  //   e.preventDefault();
+
+  //   const nuevoContacto = {
+  //     "name": name,
+  //     "phone": tlf,
+  //     "email": email,
+  //     "address": address
+  //   };
+
+  //   try {
+  //     const response = await fetch('https://playground.4geeks.com/contact/agendas/agenda_tomas/contacts', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(nuevoContacto)
+  //     });
+
+  //     if (response.ok) {
+  //       alert('Contacto guardado con éxito');
+  //       setName('');
+  //       setEmail('');
+  //       setTlf('');
+  //       setAddress('');
+  //     } else {
+  //       const data = await response.json();
+  //       console.error('Error del servidor:', data);
+  //       alert(`Error al guardar: ${data.msg || 'Datos incorrectos'}`);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error de red:', error);
+  //     alert('Error en la solicitud');
+  //   }
+  // };
 
   return (
     <div className='container-fluid text-center mt-5'>
       <h1>Add a new Contact</h1>
       <div className='bg-white w-50 mx-auto rounded shadow'>
-        <form className='mt-5 d-flex flex-column p-3' onSubmit={guardarContacto}>
+        <form className='mt-5 d-flex flex-column p-3' onSubmit={() => dispatch({type:CrearContacto, contact: nuevoContacto})}> 
+        {/* <form className='mt-5 d-flex flex-column p-3' onSubmit={() => {guardarNuevoContacto(nuevoContacto)}}> */}
 
           <label className='form-label d-flex justify-content-start mb-2'>Full Name</label>
           <input className='form-control mb-4' type="text" value={name} placeholder='Introduce Full Name' onChange={(e) => setName(e.target.value)} />

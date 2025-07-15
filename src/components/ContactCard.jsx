@@ -11,7 +11,7 @@ function ContactCard({ id, img, name, ubicacion, tlf, email }) {
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`https://playground.4geeks.com/contact/agendas/rabel/contacts/${id}`, {
+      const response = await fetch(`https://playground.4geeks.com/contact/agendas/agenda_tomas/contacts/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
