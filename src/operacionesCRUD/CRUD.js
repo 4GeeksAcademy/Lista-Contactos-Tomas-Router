@@ -36,21 +36,22 @@ export const guardarNuevoContacto = async (contacto, dispatch) => {
   }
 };
 
-export const actualizarContacto = async (id, contacto) => {
+export const actualizarContacto = async (id, contactoActualizado) => {
   try {
-    const res = await fetch(`${API_URL}/contacts/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(contacto)
+    const resp = await fetch(`${API_URL}/contacts/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(contactoActualizado)
     });
-    const data = await res.json();
-    if (res.ok) {
-      dispatch({ type: EditarContacto, payload: data });
-    } else {
-      alert("Error al actualizar contacto");
-    }
-  } catch (err) {
-    console.error(err);
+
+    if (!resp.ok) throw new Error('Error al actualizar contacto');
+
+    return await resp.json();
+  } catch (error) {
+    console.error("Error en actualizarContacto:", error);
+    throw error;
   }
 };
 
