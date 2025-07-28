@@ -1,3 +1,4 @@
+
 import {
   ObtenerContactos,
   CrearContacto,
@@ -7,7 +8,7 @@ import {
 
 const API_URL = "https://playground.4geeks.com/contact/agendas/agenda_tomas";
 
-export const fetchContactos = async () => {
+export const fetchContactos = async (dispatch) => {
   try {
     const res = await fetch(API_URL);
     const data = await res.json();
@@ -18,16 +19,15 @@ export const fetchContactos = async () => {
   }
 };
 
-export const guardarNuevoContacto = async (contacto) => {
+export const guardarNuevoContacto = async (contacto, dispatch) => {
   try {
     const res = await fetch(`${API_URL}/contacts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(contacto)
     });
-    const data = await res.json();
     if (res.ok) {
-      dispatch({ type: CrearContacto, payload: data });
+      fetchContactos(dispatch);
     } else {
       alert("Error al crear contacto");
     }

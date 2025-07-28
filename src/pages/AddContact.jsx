@@ -12,18 +12,29 @@ function AddContact() {
   const [tlf, setTlf] = useState('');
   const [address, setAddress] = useState('');
 
- 
-
-  useEffect(() => {
-     const nuevoContacto = {
-      "name": name,
-      "phone": tlf,
-      "email": email,
-      "address": address
-    };
-  })
+  const [formData, setFormData] = useState({
+    name: name,
+    email: email,
+    phone: tlf,
+    address: address
+  });
 
   const {dispatch} = useList();
+
+  const no_vacio = () => {
+    return name.trim() !== '' && email.trim() !== '' && tlf.trim() !== '' && address.trim() !== '';
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (no_vacio()){
+      await guardarNuevoContacto(formData, dispatch);
+      // setName('');
+      // setEmail('');
+      // setTlf('');
+      // setAddress('');
+    }
+  }
 
   // const guardarContacto = async (e) => {
   //   e.preventDefault();
@@ -65,7 +76,7 @@ function AddContact() {
     <div className='container-fluid text-center mt-5'>
       <h1>Add a new Contact</h1>
       <div className='bg-white w-50 mx-auto rounded shadow'>
-        <form className='mt-5 d-flex flex-column p-3' onSubmit={() => dispatch({type:CrearContacto, contact: nuevoContacto})}> 
+        <form className='mt-5 d-flex flex-column p-3' onSubmit={(e) => handleSubmit(e)}> 
         {/* <form className='mt-5 d-flex flex-column p-3' onSubmit={() => {guardarNuevoContacto(nuevoContacto)}}> */}
 
           <label className='form-label d-flex justify-content-start mb-2'>Full Name</label>

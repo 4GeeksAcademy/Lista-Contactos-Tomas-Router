@@ -5,26 +5,16 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useList } from '../context/ListContext';
 import { ObtenerContactos } from '../context/actionTypes';
+import { fetchContactos } from '../operacionesCRUD/CRUD';
 
 function Contact() {
   const navigate = useNavigate();
-  const [contacts, setContacts] = useState([]);
-  // const [contactoEnEdicion, setContactoEnEdicion] = useState(null);
-   const {dispatch} = useList();
-
-  // const fetchContacts = () => {
-  //   fetch("https://playground.4geeks.com/contact/agendas/agenda_tomas")
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log("Datos recibidos del backend:", data); 
-  //       setContacts(data.contacts); 
-  //     })
-  //     .catch(error => console.error("Error al cargar contactos:", error));
-  // }
+  const { dispatch, state } = useList();
+  const contacts = state.contacts;
 
   useEffect(() => {
-    // fetchContacts();
-    dispatch({type: ObtenerContactos})
+    //fetchContactos();
+    fetchContactos(dispatch);
   }, []);
 
   // const handleDelete = (id) => {
@@ -35,7 +25,7 @@ function Contact() {
   //   setContactoEnEdicion(contacto);
   // };
 
-  
+
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-end mb-4">
@@ -54,8 +44,8 @@ function Contact() {
             ubicacion={contact.address}
             tlf={contact.phone}
             email={contact.email}
-            // handleDelete={handleDelete}
-            // handleEdit={handleEdit}
+          // handleDelete={handleDelete}
+          // handleEdit={handleEdit}
           />
         ))}
       </div>
