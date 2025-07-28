@@ -8,8 +8,6 @@ export function listReducer(state, action) {
         case ObtenerContactos:
             return {contacts:action.payload};
 
-        case EditarContacto:
-
         default:
             return state;
     }

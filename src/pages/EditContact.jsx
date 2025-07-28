@@ -19,32 +19,6 @@ function EditContact() {
     agenda_slug: 'rabel'
   });
 
-  // const handleChange = (e) => {
-  //   setContacto({ ...contacto, [e.target.name]: e.target.value });
-  // };
-
-  // const guardarContacto = async () => {
-  //   try {
-  //     const response = await fetch(`https://playground.4geeks.com/contact/agendas/agenda_tomas/contacts/${id}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(contacto)
-  //     });
-
-  //     if (response.ok) {
-  //       alert('Contacto actualizado');
-  //       navigate('/');
-  //     } else {
-  //       const data = await response.json();
-  //       alert(`Error: ${data.msg || 'No se pudo actualizar'}`);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert('Error de red');
-  //   }
-  // };
 
   return (
     <div className="container mt-4 bg-white rounded shadow p-5 mt-5">
