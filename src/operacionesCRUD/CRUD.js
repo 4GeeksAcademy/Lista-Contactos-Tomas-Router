@@ -55,17 +55,17 @@ export const actualizarContacto = async (id, contactoActualizado) => {
   }
 };
 
-export const eliminarContacto = async (id) => {
+export const eliminarContacto = async (id, dispatch) => {
   try {
-    const res = await fetch(`${API_URL}/contacts/${id}`, {
+    const res = await fetch(`https://playground.4geeks.com/contact/agendas/agenda_tomas/contacts/${id}`, {
       method: "DELETE"
     });
     if (res.ok) {
-      dispatch({ type: BorrarContacto, payload: id });
+      await fetchContactos(dispatch); 
     } else {
       alert("Error al borrar contacto");
     }
   } catch (err) {
-    console.error(err);
+    console.error("Error al eliminar contacto:", err);
   }
 };

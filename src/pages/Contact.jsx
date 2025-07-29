@@ -13,17 +13,8 @@ function Contact() {
   const contacts = state.contacts;
 
   useEffect(() => {
-    //fetchContactos();
     fetchContactos(dispatch);
   }, []);
-
-  // const handleDelete = (id) => {
-  //   setContacts(prev => prev.filter(contact => contact.id !== id));
-  // };
-
-  // const handleEdit = (contacto) => {
-  //   setContactoEnEdicion(contacto);
-  // };
 
 
   return (
@@ -44,8 +35,6 @@ function Contact() {
             ubicacion={contact.address}
             tlf={contact.phone}
             email={contact.email}
-          // handleDelete={handleDelete}
-          // handleEdit={handleEdit}
           />
         ))}
       </div>
